@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Dog Show – Cardápio Online</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+  :root{
+    --red:#C8151B;
+    --orange:#F07B00;
+    --light-orange:#FF9F1C;
+    --white:#FFFFFF;
+    --cream:#FFF8F0;
+    --dark:#1A0A00;
+    --card-bg:rgba(255,255,255,0.95);
+    --shadow:0 8px 32px rgba(200,21,27,0.15);
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+
+  body{
+    font-family:'Nunito',sans-serif;
+    background:var(--cream);
+    color:var(--dark);
+    min-height:100vh;
+    background-image:
+      radial-gradient(circle at 15% 20%,rgba(240,123,0,0.12) 0%,transparent 50%),
+      radial-gradient(circle at 85% 80%,rgba(200,21,27,0.12) 0%,transparent 50%),
+      url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23F07B00' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+
+  /* ── HEADER ── */
+  header{
+    background:linear-gradient(135deg,var(--red) 0%,#A80E13 40%,#7A0A0E 100%);
+    padding:0;
+    position:relative;
+    overflow:hidden;
+  }
+  header::before{
+    content:'';
+    position:absolute;
+    inset:0;
+    background:url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='50' cy='50' r='40' stroke='rgba(255,255,255,0.05)' stroke-width='1' fill='none'/%3E%3C/svg%3E") repeat;
+    background-size:80px 80px;
+  }
+  .header-top{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    padding:32px 20px 20px;
+    gap:16px;
+    position:relative;
+    z-index:1;
+  }
+  .logo-wrap{
+    width:180px;
+    animation:pulse 3s ease-in-out infinite;
+    flex-shrink:0;
+    filter:drop-shadow(0 8px 24px rgba(0,0,0,0.45));
+  }
+  .logo-wrap img{width:100%;height:auto;display:block;}
+  @keyframes pulse{
+    0%,100%{box-shadow:0 0 0 4px rgba(255,159,28,0.35), 0 12px 40px rgba(0,0,0,0.4);}
+    50%{box-shadow:0 0 0 10px rgba(255,159,28,0.15), 0 12px 40px rgba(0,0,0,0.4);}
+  }
+  .brand-name{
+    font-family:'Bebas Neue',cursive;
+    font-size:clamp(3rem,8vw,5.5rem);
+    letter-spacing:4px;
+    color:var(--white);
+    text-shadow:0 4px 20px rgba(0,0,0,0.5);
+    line-height:1;
+    text-align:center;
+  }
+  .brand-sub{
+    font-size:1rem;
+    color:var(--light-orange);
+    font-weight:700;
+    letter-spacing:3px;
+    text-transform:uppercase;
+    text-align:center;
+    margin-top:-8px;
+  }
+
+  /* ── DELIVERY BANNER ── */
+  .delivery-banner{
+    background:linear-gradient(90deg,var(--orange),var(--light-orange),var(--orange));
+    background-size:200% auto;
+    animation:shimmer 3s linear infinite;
+    text-align:center;
+    padding:12px 20px;
+    font-family:'Bebas Neue',cursive;
+    font-size:1.4rem;
+    letter-spacing:3px;
+    color:var(--white);
+    text-shadow:0 2px 8px rgba(0,0,0,0.3);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:12px;
+  }
+  @keyframes shimmer{0%{background-position:0% center;}100%{background-position:200% center;}}
+  .delivery-banner svg{width:24px;height:24px;fill:white;flex-shrink:0;}
+
+  /* ── MAIN ── */
+  main{max-width:960px;margin:0 auto;padding:32px 16px 120px;}
+
+  /* ── SECTION TITLE ── */
+  .section-title--destaque{
+    font-size:2.8rem;
+    color:var(--red);
+    background:linear-gradient(90deg,rgba(200,21,27,0.08),transparent);
+    padding:10px 16px;
+    border-radius:12px;
+    border-left:6px solid var(--orange);
+    margin-bottom:20px;
+  }
+  .section-title{
+    font-family:'Bebas Neue',cursive;
+    font-size:2.2rem;
+    letter-spacing:3px;
+    color:var(--red);
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin:40px 0 16px;
+    position:relative;
+  }
+  .section-title::after{
+    content:'';
+    flex:1;
+    height:3px;
+    background:linear-gradient(90deg,var(--orange),transparent);
+    border-radius:2px;
+  }
+  .section-title .emoji{font-size:2rem;}
+
+  /* ── MENU GRID ── */
+  .menu-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+    gap:16px;
+  }
+
+  /* ── MENU CARD ── */
+  .menu-card{
+    background:var(--card-bg);
+    border-radius:20px;
+    overflow:hidden;
+    box-shadow:var(--shadow);
+    border:2px solid transparent;
+    cursor:pointer;
+    transition:transform .2s,border-color .2s,box-shadow .2s;
+    position:relative;
+  }
+  .menu-card:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(200,21,27,0.2);}
+  .menu-card.selected{
+    border-color:var(--orange);
+    box-shadow:0 0 0 3px rgba(240,123,0,0.3),var(--shadow);
+  }
+  .card-img{
+    width:100%;height:160px;object-fit:cover;
+    display:block;
+  }
+  .card-body{padding:14px 16px 16px;}
+  .card-name{
+    font-weight:800;font-size:1rem;
+    color:var(--dark);line-height:1.3;
+    margin-bottom:4px;
+  }
+  .card-desc{
+    font-size:.8rem;color:#666;
+    line-height:1.4;margin-bottom:10px;
+    min-height:38px;
+  }
+  .card-footer{
+    display:flex;align-items:center;
+    justify-content:space-between;
+  }
+  .card-price{
+    font-family:'Bebas Neue',cursive;
+    font-size:1.6rem;
+    color:var(--red);
+    letter-spacing:1px;
+  }
+  .qty-ctrl{
+    display:flex;align-items:center;gap:6px;
+  }
+  .qty-btn{
+    width:30px;height:30px;border-radius:50%;
+    border:2px solid var(--orange);
+    background:white;
+    color:var(--orange);
+    font-size:1.1rem;
+    font-weight:800;
+    cursor:pointer;
+    display:flex;align-items:center;justify-content:center;
+    transition:background .15s,color .15s;
+    line-height:1;
+  }
+  .qty-btn:hover{background:var(--orange);color:white;}
+  .qty-num{
+    font-weight:800;font-size:1rem;
+    min-width:20px;text-align:center;
+    color:var(--dark);
+  }
+
+  /* ── ADICIONAIS ── */
+  .adicionais-box{
+    background:var(--card-bg);
+    border-radius:20px;
+    padding:20px;
+    box-shadow:var(--shadow);
+    margin-top:8px;
+  }
+  .adicionais-title{
+    font-weight:800;font-size:.95rem;
+    color:var(--red);margin-bottom:14px;
+    display:flex;align-items:center;gap:6px;
+    text-transform:uppercase;letter-spacing:1px;
+  }
+  .adicionais-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(140px,1fr));
+    gap:10px;
+  }
+  .adicional-item{
+    border:2px solid #eee;
+    border-radius:12px;
+    padding:10px;
+    cursor:pointer;
+    transition:border-color .15s,background .15s;
+    user-select:none;
+  }
+  .adicional-item.selected{
+    border-color:var(--orange);
+    background:rgba(240,123,0,0.08);
+  }
+  .adicional-name{font-weight:700;font-size:.85rem;color:var(--dark);}
+  .adicional-price{font-size:.8rem;color:var(--red);font-weight:600;margin-top:2px;}
+  .adicional-footer{
+    display:flex;align-items:center;justify-content:space-between;
+    margin-top:6px;
+  }
+
+  /* ── BEBIDAS ── */
+  .bebidas-list{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(170px,1fr));
+    gap:12px;
+  }
+  .bebida-card{
+    background:var(--card-bg);
+    border:2px solid transparent;
+    border-radius:16px;
+    padding:14px 16px;
+    display:flex;align-items:center;justify-content:space-between;
+    cursor:pointer;
+    box-shadow:var(--shadow);
+    transition:border-color .15s,transform .15s;
+  }
+  .bebida-card:hover{transform:translateY(-2px);}
+  .bebida-card.selected{border-color:var(--orange);}
+  .bebida-info .name{font-weight:700;font-size:.9rem;}
+  .bebida-info .price{font-weight:600;color:var(--red);font-size:.85rem;}
+
+  /* ── STICKY TOTAL ── */
+  .sticky-bar{
+    position:fixed;bottom:0;left:0;right:0;
+    background:linear-gradient(135deg,var(--red),#A80E13);
+    padding:14px 20px;
+    display:flex;align-items:center;justify-content:space-between;
+    box-shadow:0 -4px 20px rgba(0,0,0,0.25);
+    z-index:100;
+    gap:12px;
+  }
+  .sticky-total{
+    color:white;
+    font-weight:700;font-size:.9rem;
+    line-height:1.2;
+  }
+  .sticky-total span{
+    font-family:'Bebas Neue',cursive;
+    font-size:1.8rem;
+    color:var(--light-orange);
+    display:block;
+  }
+  .whatsapp-btn{
+    background:linear-gradient(135deg,#25D366,#128C7E);
+    color:white;
+    border:none;
+    border-radius:50px;
+    padding:12px 22px;
+    font-weight:800;
+    font-size:.95rem;
+    cursor:pointer;
+    display:flex;align-items:center;gap:8px;
+    box-shadow:0 4px 16px rgba(37,211,102,0.4);
+    transition:transform .15s,box-shadow .15s;
+    white-space:nowrap;
+    font-family:'Nunito',sans-serif;
+  }
+  .whatsapp-btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(37,211,102,0.5);}
+  .whatsapp-btn svg{width:22px;height:22px;fill:white;flex-shrink:0;}
+
+  /* ── EMPTY STATE ── */
+  .empty-msg{
+    text-align:center;padding:20px;
+    color:#999;font-size:.9rem;
+    font-style:italic;
+  }
+
+  /* ── PRENSA WARNING ── */
+  .prensa-warn{
+    margin-top:12px;
+    background:rgba(200,21,27,0.08);
+    border:2px solid var(--red);
+    border-radius:10px;
+    padding:10px 14px;
+    font-size:.85rem;
+    color:var(--red);
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-weight:700;
+  }
+  .add-check{
+    width:22px;height:22px;
+    border-radius:50%;
+    background:var(--orange);
+    color:white;
+    font-size:.85rem;
+    display:flex;align-items:center;justify-content:center;
+    font-weight:800;
+    flex-shrink:0;
+  }
+  .adicional-item.selected .add-check{background:var(--orange);}
+
+  /* ── RESPONSIVE ── */
+  @media(max-width:480px){
+    .menu-grid{grid-template-columns:1fr;}
+    .adicionais-grid{grid-template-columns:1fr 1fr;}
+    .bebidas-list{grid-template-columns:1fr 1fr;}
+    .brand-name{font-size:3rem;}
+  }
+
+  /* ── DELIVERY FORM ── */
+  .delivery-form{
+    background:var(--card-bg);
+    border-radius:20px;
+    padding:24px;
+    box-shadow:var(--shadow);
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+  }
+  .form-group{display:flex;flex-direction:column;gap:6px;}
+  .form-group label{
+    font-weight:800;font-size:.9rem;
+    color:var(--red);
+    text-transform:uppercase;letter-spacing:1px;
+  }
+  .form-group input{
+    border:2px solid #e0d5cc;
+    border-radius:12px;
+    padding:14px 16px;
+    font-family:'Nunito',sans-serif;
+    font-size:1rem;
+    font-weight:600;
+    color:var(--dark);
+    background:white;
+    outline:none;
+    transition:border-color .2s,box-shadow .2s;
+  }
+  .form-group input:focus{
+    border-color:var(--orange);
+    box-shadow:0 0 0 3px rgba(240,123,0,0.15);
+  }
+  .form-group input::placeholder{color:#bbb;}
+
+  /* ── DOG INSTANCE CARDS ── */
+  .dog-instance{
+    background:var(--card-bg);
+    border-radius:20px;
+    border:2px solid var(--orange);
+    box-shadow:0 8px 32px rgba(240,123,0,0.2);
+    margin-bottom:16px;
+    overflow:hidden;
+    animation:slideIn .35s ease;
+  }
+  @keyframes slideIn{
+    from{opacity:0;transform:translateY(-14px);}
+    to{opacity:1;transform:translateY(0);}
+  }
+  .dog-instance-header{
+    background:linear-gradient(135deg,var(--red),var(--orange));
+    padding:12px 16px;
+    display:flex;align-items:center;justify-content:space-between;
+  }
+  .dog-instance-title{
+    font-family:'Bebas Neue',cursive;
+    font-size:1.35rem;letter-spacing:2px;color:white;
+  }
+  .dog-instance-remove{
+    background:rgba(255,255,255,0.2);
+    border:none;border-radius:50%;
+    width:30px;height:30px;color:white;font-size:1rem;
+    cursor:pointer;display:flex;align-items:center;justify-content:center;
+    transition:background .15s;
+  }
+  .dog-instance-remove:hover{background:rgba(255,255,255,0.4);}
+  .dog-instance-body{padding:16px;}
+  .dog-instance-base{
+    font-weight:700;font-size:.9rem;color:var(--dark);
+    margin-bottom:12px;padding-bottom:10px;
+    border-bottom:2px dashed rgba(240,123,0,0.25);
+    display:flex;justify-content:space-between;align-items:center;
+  }
+  .dog-instance-base .base-price{
+    font-family:'Bebas Neue',cursive;font-size:1.3rem;color:var(--red);
+  }
+  .dog-inst-add-title{
+    font-weight:800;font-size:.85rem;color:var(--red);
+    margin-bottom:10px;text-transform:uppercase;letter-spacing:1px;
+    display:flex;align-items:center;gap:6px;
+  }
+  .dog-instance-subtotal{
+    margin-top:14px;text-align:right;
+    font-weight:800;font-size:.9rem;color:#555;
+  }
+  .dog-instance-subtotal strong{
+    font-family:'Bebas Neue',cursive;font-size:1.5rem;color:var(--orange);
+  }
+  /* dog card add button */
+  .add-dog-btn{
+    background:linear-gradient(135deg,var(--red),var(--orange));
+    color:white;border:none;border-radius:50px;
+    padding:9px 18px;font-weight:800;font-size:.88rem;
+    cursor:pointer;font-family:'Nunito',sans-serif;
+    transition:transform .15s,box-shadow .15s;
+    box-shadow:0 4px 12px rgba(200,21,27,0.3);
+    display:flex;align-items:center;gap:5px;white-space:nowrap;
+  }
+  .add-dog-btn:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(200,21,27,0.4);}
+
+  /* ── PAYMENT SELECTOR ── */
+  .payment-options{display:flex;flex-wrap:wrap;gap:10px;margin-top:4px;}
+  .pay-btn{
+    flex:1;min-width:120px;
+    border:2px solid #e0d5cc;border-radius:12px;
+    padding:12px 10px;background:white;
+    cursor:pointer;font-family:'Nunito',sans-serif;
+    font-weight:700;font-size:.9rem;color:var(--dark);
+    display:flex;align-items:center;justify-content:center;
+    gap:7px;transition:border-color .15s,background .15s,color .15s;
+    outline:none;
+  }
+  .pay-btn:hover{border-color:var(--orange);background:rgba(240,123,0,0.05);}
+  .pay-btn.active{
+    border-color:var(--orange);
+    background:linear-gradient(135deg,rgba(200,21,27,0.08),rgba(240,123,0,0.12));
+    color:var(--red);
+  }
+  .pay-btn .pay-icon{font-size:1.3rem;}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-top">
+    <div class="logo-wrap">
+      <img src="https://i.ibb.co/0yCPhh3C/logo.jpg" alt="Dog Show Logo"/>
+    </div>
+    <div>
+      <div class="brand-name">Dog Show</div>
+    </div>
+  </div>
+</header>
+
+<!-- DELIVERY BANNER -->
+<div class="delivery-banner">
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zM6 18.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm13.5-9l1.96 2.5H17V9.5h2.5zm-1.5 9c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
+  🚫 Trabalhamos apenas com DELIVERY — Peça e receba em casa!
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zM6 18.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm13.5-9l1.96 2.5H17V9.5h2.5zm-1.5 9c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
+</div>
+
+<main>
+
+  <!-- ══ DOG'S ══ -->
+  <div class="section-title section-title--destaque"><span class="emoji">🌭</span> Monte seu Hot Dog Personalizado</div>
+  <div class="menu-grid" id="dogs-grid"></div>
+
+  <!-- dog orders injected dynamically -->
+  <div id="dog-orders-container"></div>
+
+  <!-- ══ YAKISOBA ══ -->
+  <div class="section-title"><span class="emoji">🍜</span> Yakisoba</div>
+  <div class="menu-grid" id="yaki-grid"></div>
+
+  <!-- ══ BURGUER ══ -->
+  <div class="section-title"><span class="emoji">🍔</span> Burguer Artesanal</div>
+  <div class="menu-grid" id="burguer-grid"></div>
+
+  <!-- ══ MASSAS ══ -->
+  <div class="section-title"><span class="emoji">🍝</span> Massas</div>
+  <div class="menu-grid" id="massas-grid"></div>
+
+  <!-- ══ LANCHES ══ -->
+  <div class="section-title"><span class="emoji">🍔</span> Lanches</div>
+  <div class="menu-grid" id="lanches-grid"></div>
+
+  <!-- ══ BEBIDAS ══ -->
+  <div class="section-title"><span class="emoji">🥤</span> Bebidas</div>
+  <div class="bebidas-list" id="bebidas-list"></div>
+
+  <!-- ══ DADOS DE ENTREGA ══ -->
+  <div class="section-title"><span class="emoji">📋</span> Dados para Entrega</div>
+  <div class="delivery-form">
+    <div class="form-group">
+      <label for="input-nome">👤 Nome</label>
+      <input type="text" id="input-nome" placeholder="Seu nome completo"/>
+    </div>
+    <div class="form-group">
+      <label for="input-endereco">📍 Endereço (Bairro, Rua e Número)</label>
+      <input type="text" id="input-endereco" placeholder="Bairro, Rua, Nº" value="Realeza - PR, "/>
+    </div>
+    <div class="form-group">
+      <label>💳 Forma de Pagamento</label>
+      <div class="payment-options">
+        <button class="pay-btn" data-pay="Dinheiro" onclick="selectPay(this)"><span class="pay-icon">💵</span> Dinheiro</button>
+        <button class="pay-btn" data-pay="Pix" onclick="selectPay(this)"><span class="pay-icon">📲</span> Pix</button>
+        <button class="pay-btn" data-pay="Cartão de Crédito" onclick="selectPay(this)"><span class="pay-icon">💳</span> Crédito</button>
+        <button class="pay-btn" data-pay="Cartão de Débito" onclick="selectPay(this)"><span class="pay-icon">💳</span> Débito</button>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<!-- STICKY BAR -->
+<div class="sticky-bar">
+  <div class="sticky-total">
+    Seu pedido
+    <span id="total-display">R$ 0,00</span>
+  </div>
+  <button class="whatsapp-btn" onclick="fazerPedido()">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12.004 2C6.476 2 2 6.477 2 12.004c0 1.779.471 3.449 1.29 4.904L2 22l5.234-1.276A9.964 9.964 0 0012.004 22C17.53 22 22 17.522 22 12.004 22 6.477 17.53 2 12.004 2zm0 18.214a8.21 8.21 0 01-4.181-1.143l-.301-.178-3.107.757.786-2.993-.196-.309A8.167 8.167 0 013.79 12.004c0-4.53 3.685-8.214 8.214-8.214 4.528 0 8.213 3.684 8.213 8.214 0 4.529-3.685 8.21-8.213 8.21z"/></svg>
+    Fazer pedido pelo WhatsApp
+  </button>
+</div>
+
+<script>
+// ─────────────────────────────────────────────
+//  DATA
+// ─────────────────────────────────────────────
+const DOGS = [
+  {id:'d1', name:'Dog Show Tradicional Simples', price:13,
+   desc:'1 salsicha, molho, maionese caseira, milho, alface e batata palha',
+   img:'https://www.seara.com.br/wp-content/uploads/2025/09/6a9bbac5ec5bb5c00c84c5b791d457e5_cachorro_quente_com_molho.webp'},
+];
+const ADICIONAIS = [
+  {id:'a1', name:'Salsicha',price:3},
+  {id:'a2', name:'Bacon',price:10},
+  {id:'a3', name:'Frango',price:8},
+  {id:'a4', name:'Calabresa',price:8},
+  {id:'a5', name:'Cheddar',price:6},
+  {id:'a6', name:'Catupiry',price:6},
+  {id:'a7', name:'Coração',price:13},
+  {id:'a8', name:'Costela Desfiada',price:15},
+];
+const YAKISOBA = [
+  {id:'y1', name:'Yakisoba Vegetariano (600g)', price:24,
+   desc:'Macarrão, cebola roxa, cenoura, repolho roxo, pimentão, couve-flor, gengibre, alho, brócolis e shoyu',
+   img:'https://alloydeliveryimages.s3.sa-east-1.amazonaws.com/item_images/2781/66a149c11ce8bd0r2w.webp'},
+  {id:'y2', name:'Yakisoba Frango (600g)', price:28,
+   desc:'Macarrão, peito de frango, cebola roxa, cenoura, pimentão, repolho roxo, couve-flor, gengibre, alho, brócolis e shoyu',
+   img:'https://alloydeliveryimages.s3.sa-east-1.amazonaws.com/item_images/3694/670ae90533c702vegz.webp'},
+  {id:'y3', name:'Yakisoba Carne (600g)', price:32,
+   desc:'Macarrão, carne de gado, cebola roxa, cenoura, pimentão, repolho roxo, couve-flor, gengibre, alho, brócolis e shoyu',
+   img:'https://cdn0.umcomo.com.br/pt/posts/2/3/8/como_fazer_yakisoba_tradicional_7832_orig.jpg'},
+  {id:'y4', name:'Yakisoba Misto (600g)', price:30,
+   desc:'Macarrão, peito de frango, carne de gado, cebola roxa, cenoura, pimentão, repolho roxo, couve-flor, gengibre, alho, brócolis e shoyu',
+   img:'https://alloydeliveryimages.s3.sa-east-1.amazonaws.com/item_images/3694/670ae8e01691ft5f3l.webp'},
+];
+const BURGUER = [
+  {id:'b1', name:'Burguer Show Salada', price:19,
+   desc:'Pão brioche, maionese caseira, hambúrguer 200g, queijo prato, molho rose, alface americana, tomate e pepino agridoce',
+   img:'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=500&q=80'},
+  {id:'b2', name:'Burguer Show Bacon', price:25,
+   desc:'Pão brioche, maionese caseira, hambúrguer 200g, queijo prato, molho rose, alface americana, tomate, pepino agridoce e bacon',
+   img:'https://images.unsplash.com/photo-1553979459-d2229ba7433b?w=500&q=80'},
+];
+const MASSAS = [
+  {id:'m1', name:'Macarrão Bolonhesa (450g)', price:15,
+   desc:'Macarrão ao molho bolonhesa',
+   img:'https://images.unsplash.com/photo-1555949258-eb67b1ef0ceb?w=500&q=80'},
+  {id:'m2', name:'Macarrão com Molho de Frango (450g)', price:15,
+   desc:'Macarrão ao molho de frango',
+   img:'https://images.unsplash.com/photo-1563379926898-05f4575a45d8?w=500&q=80'},
+  {id:'m3', name:'Macarrão Carbonara (450g)', price:22,
+   desc:'Macarrão ao molho carbonara',
+   img:'https://images.unsplash.com/photo-1612874742237-6526221588e3?w=500&q=80'},
+];
+const LANCHES = [
+  {id:'l1', name:'X Salada', price:14,
+   desc:'Pão, maionese, alface, tomate, hambúrguer 96g, queijo, milho e presunto',
+   img:'https://osaboroso.com.br/wp-content/uploads/2023/09/PAO-PRENSADOMAIONESEMILHOHAMBURGER-ARTESANAL-150-GQUEIJO-MUSSARELAPRESUNTOTOMATECEBOLA-ROXAALFACE.jpg'},
+  {id:'l2', name:'X Egg', price:16,
+   desc:'Pão, maionese, alface, tomate, hambúrguer 96g, queijo, presunto, milho e ovo',
+   img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTo-4jJH_j6E9WkEfxPP4hUNFIN6eC9lHYgIA&s'},
+  {id:'l3', name:'X Calabresa', price:16,
+   desc:'Pão, maionese, alface, tomate, hambúrguer 96g, queijo, presunto, milho e calabresa',
+   img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQMLWj36WoRRhiNYwqOgR8dlgCPnZ5rBOlXkg&s'},
+  {id:'l4', name:'X Frango', price:16,
+   desc:'Pão, maionese, alface, tomate, hambúrguer de frango 96g, queijo, milho e presunto',
+   img:'https://osaboroso.com.br/wp-content/uploads/2023/09/PAO-PRENSADOMAIONESEMILHOHAMBURGER-ARTESANAL-150-GQUEIJO-MUSSARELAPRESUNTOTOMATECEBOLA-ROXAALFACEFRANGO.jpg'},
+  {id:'l5', name:'X Bacon', price:18,
+   desc:'Pão, maionese, alface, tomate, hambúrguer 96g, queijo, presunto, milho e bacon',
+   img:'https://bokaskachurrasco.azapi.com.br/_core/_uploads//2024/11/2322191124b5aeidbkji.jpg'},
+  {id:'l6', name:'X Tudo', price:28,
+   desc:'Pão, 2 hambúrgueres 96g, alface, tomate, maionese, presunto, queijo, calabresa, bacon, ovo e milho',
+   img:'https://guiadacozinha.com.br/wp-content/uploads/2023/05/tamanho-padrao-gc-42.jpg'},
+];
+const BEBIDAS = [
+  {id:'bv1', name:'Refrigerante lata',price:6},
+  {id:'bv2', name:'Refrigerante 600ml',price:8},
+  {id:'bv3', name:'Refrigerante 1L',price:10},
+  {id:'bv4', name:'Refrigerante 2L',price:15},
+  {id:'bv5', name:'Água',price:4},
+];
+
+// ─────────────────────────────────────────────
+//  STATE
+// ─────────────────────────────────────────────
+const quantities = {};          // non-dog item id -> qty
+let dogOrders    = [];          // [{uid, dogId, dogName, dogPrice, adicionais:{aId:qty}}]
+let dogUidCtr    = 0;
+
+function fmt(n){ return 'R$ '+n.toFixed(2).replace('.',','); }
+
+// ─── DOG INSTANCE LOGIC ───────────────────────
+function addDogOrder(dogId,e){
+  e && e.stopPropagation();
+  const dog = DOGS.find(d=>d.id===dogId);
+  if(!dog) return;
+  dogUidCtr++;
+  dogOrders.push({uid:dogUidCtr, dogId, dogName:dog.name, dogPrice:dog.price, adicionais:{}});
+  renderDogOrders();
+  updateTotal();
+  setTimeout(()=>{
+    const el=document.getElementById('dog-instance-'+dogUidCtr);
+    if(el) el.scrollIntoView({behavior:'smooth',block:'nearest'});
+  },120);
+}
+
+function removeDogOrder(uid){
+  dogOrders=dogOrders.filter(o=>o.uid!==uid);
+  renderDogOrders();
+  updateTotal();
+}
+
+function changeDogAdd(uid,aId,delta,e){
+  e && e.stopPropagation();
+  const order=dogOrders.find(o=>o.uid===uid);
+  if(!order) return;
+  const cur=order.adicionais[aId]||0;
+  // toggle: se já está selecionado e clica +, ignora; clique no card alterna
+  if(delta>0 && cur>=1) return; // max 1 por adicional
+  order.adicionais[aId]=Math.max(0,cur+delta);
+  const card=document.querySelector('[data-duid="'+uid+'"][data-daid="'+aId+'"]');
+  if(card) card.classList.toggle('selected',order.adicionais[aId]>0);
+  refreshInstanceSubtotal(uid);
+  checkPrensa(uid);
+  updateTotal();
+}
+
+function checkPrensa(uid){
+  const order=dogOrders.find(o=>o.uid===uid);
+  if(!order) return;
+  const total=Object.values(order.adicionais).reduce((s,v)=>s+(v>0?1:0),0);
+  const warn=document.getElementById('prensa-warn-'+uid);
+  if(warn) warn.style.display=total>4?'flex':'none';
+}
+
+function refreshInstanceSubtotal(uid){
+  const order=dogOrders.find(o=>o.uid===uid);
+  if(!order) return;
+  let s=order.dogPrice;
+  ADICIONAIS.forEach(a=>{s+=(order.adicionais[a.id]||0)*a.price;});
+  const el=document.getElementById('dog-sub-'+uid);
+  if(el) el.textContent=fmt(s);
+}
+
+function renderDogOrders(){
+  const container=document.getElementById('dog-orders-container');
+  if(dogOrders.length===0){container.innerHTML='';return;}
+  container.innerHTML=dogOrders.map((order,idx)=>{
+    const addsHTML=ADICIONAIS.map(a=>{
+      const q=order.adicionais[a.id]||0;
+      return `
+        <div class="adicional-item ${q>0?'selected':''}"
+             data-duid="${order.uid}" data-daid="${a.id}"
+             onclick="toggleDogAdd(${order.uid},'${a.id}',event)">
+          <div class="adicional-name">${a.name}</div>
+          <div class="adicional-footer">
+            <div class="adicional-price">${fmt(a.price)}</div>
+            <div class="add-check">${q>0?'&#10003;':''}</div>
+          </div>
+        </div>`;
+    }).join('');
+    let sub=order.dogPrice;
+    ADICIONAIS.forEach(a=>{sub+=(order.adicionais[a.id]||0)*a.price;});
+    return `
+      <div class="dog-instance" id="dog-instance-${order.uid}">
+        <div class="dog-instance-header">
+          <div class="dog-instance-title">🌭 Hot Dog #${idx+1}</div>
+          <button class="dog-instance-remove" onclick="removeDogOrder(${order.uid})" title="Remover">✕</button>
+        </div>
+        <div class="dog-instance-body">
+          <div class="dog-instance-base">
+            <span>${order.dogName}</span>
+            <span class="base-price">${fmt(order.dogPrice)}</span>
+          </div>
+          <div class="dog-inst-add-title">🔥 Adicionais deste Hot Dog</div>
+          <div class="adicionais-grid">${addsHTML}</div>
+          <div class="prensa-warn" id="prensa-warn-${order.uid}" style="display:none;">
+            <span>&#9888;&#65039;</span> Acima de 4 adicionais o lanche <strong>nao pode ser prensado</strong>.
+          </div>
+          <div class="dog-instance-subtotal">Subtotal: <strong id="dog-sub-${order.uid}">${fmt(sub)}</strong></div>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+// ─── TOTAL ────────────────────────────────────
+function totalGeral(){
+  let t=0;
+  dogOrders.forEach(order=>{
+    t+=order.dogPrice;
+    ADICIONAIS.forEach(a=>{t+=(order.adicionais[a.id]||0)*a.price;});
+  });
+  [...YAKISOBA,...BURGUER,...MASSAS,...LANCHES].forEach(item=>{
+    t+=(quantities[item.id]||0)*item.price;
+  });
+  BEBIDAS.forEach(b=>{t+=(quantities[b.id]||0)*b.price;});
+  return t;
+}
+
+function updateTotal(){document.getElementById('total-display').textContent=fmt(totalGeral());}
+function updateAdicionaisVisibility(){}
+
+
+// ─────────────────────────────────────────────
+//  RENDER HELPERS
+// ─────────────────────────────────────────────
+function renderQtyCtrl(id){
+  const q=quantities[id]||0;
+  return `
+    <div class="qty-ctrl">
+      <button class="qty-btn" onclick="changeQty('${id}',-1,event)">−</button>
+      <span class="qty-num" id="qty-${id}">${q}</span>
+      <button class="qty-btn" onclick="changeQty('${id}',1,event)">+</button>
+    </div>`;
+}
+
+function changeQty(id,delta,e){
+  e && e.stopPropagation();
+  quantities[id]=Math.max(0,(quantities[id]||0)+delta);
+  const el=document.getElementById('qty-'+id);
+  if(el) el.textContent=quantities[id];
+  const card=document.querySelector('[data-id="'+id+'"]');
+  if(card) card.classList.toggle('selected',quantities[id]>0);
+  updateTotal();
+}
+
+function renderDogCard(item){
+  return `
+  <div class="menu-card" data-id="${item.id}">
+    <img class="card-img" src="${item.img}" alt="${item.name}" loading="lazy"/>
+    <div class="card-body">
+      <div class="card-name">${item.name}</div>
+      <div class="card-desc">${item.desc}</div>
+      <div class="card-footer">
+        <div class="card-price">${fmt(item.price)}</div>
+        <button class="add-dog-btn" onclick="addDogOrder('${item.id}',event)">➕ Adicionar e/ou Personalizar</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+function renderCard(item){
+  return `
+  <div class="menu-card" data-id="${item.id}" onclick="changeQty('${item.id}',1,event)">
+    <img class="card-img" src="${item.img}" alt="${item.name}" loading="lazy"/>
+    <div class="card-body">
+      <div class="card-name">${item.name}</div>
+      <div class="card-desc">${item.desc}</div>
+      <div class="card-footer">
+        <div class="card-price">${fmt(item.price)}</div>
+        ${renderQtyCtrl(item.id)}
+      </div>
+    </div>
+  </div>`;
+}
+
+function renderBebida(b){
+  return `
+  <div class="bebida-card" data-id="${b.id}" onclick="changeQty('${b.id}',1,event)">
+    <div class="bebida-info">
+      <div class="name">${b.name}</div>
+      <div class="price">${fmt(b.price)}</div>
+    </div>
+    ${renderQtyCtrl(b.id)}
+  </div>`;
+}
+
+// ─────────────────────────────────────────────
+//  INIT
+// ─────────────────────────────────────────────
+document.getElementById('dogs-grid').innerHTML     = DOGS.map(renderDogCard).join('');
+document.getElementById('yaki-grid').innerHTML     = YAKISOBA.map(renderCard).join('');
+document.getElementById('burguer-grid').innerHTML  = BURGUER.map(renderCard).join('');
+document.getElementById('massas-grid').innerHTML   = MASSAS.map(renderCard).join('');
+document.getElementById('lanches-grid').innerHTML  = LANCHES.map(renderCard).join('');
+document.getElementById('bebidas-list').innerHTML  = BEBIDAS.map(renderBebida).join('');
+
+// ─────────────────────────────────────────────
+//  WHATSAPP
+// ─────────────────────────────────────────────
+function toggleDogAdd(uid,aId,e){
+  e && e.stopPropagation();
+  const order=dogOrders.find(o=>o.uid===uid);
+  if(!order) return;
+  const cur=order.adicionais[aId]||0;
+  order.adicionais[aId]=cur>0?0:1;
+  const card=document.querySelector('[data-duid="'+uid+'"][data-daid="'+aId+'"]');
+  if(card){
+    card.classList.toggle('selected',order.adicionais[aId]>0);
+    const chk=card.querySelector('.add-check');
+    if(chk) chk.innerHTML=order.adicionais[aId]>0?'&#10003;':'';
+  }
+  refreshInstanceSubtotal(uid);
+  checkPrensa(uid);
+  updateTotal();
+}
+
+function selectPay(btn){
+  document.querySelectorAll('.pay-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+function fazerPedido(){
+  const nome=document.getElementById('input-nome').value.trim();
+  const endereco=document.getElementById('input-endereco').value.trim();
+  if(!nome){alert('Por favor, informe seu nome!');document.getElementById('input-nome').focus();return;}
+  if(!endereco||endereco==='Realeza - PR, '){alert('Por favor, informe seu endereco completo!');document.getElementById('input-endereco').focus();return;}
+  const payBtn=document.querySelector('.pay-btn.active');
+  if(!payBtn){alert('Por favor, selecione a forma de pagamento!');return;}
+  const pagamento=payBtn.getAttribute('data-pay');
+
+  let lines=[];
+
+  // Hot Dogs personalizados
+  dogOrders.forEach((order,idx)=>{
+    lines.push('*Hot Dog #'+(idx+1)+' - '+order.dogName+'* - '+fmt(order.dogPrice));
+    const adds=ADICIONAIS.filter(a=>(order.adicionais[a.id]||0)>0);
+    if(adds.length>0){
+      adds.forEach(a=>{
+        const q=order.adicionais[a.id];
+        lines.push('   + '+q+'x '+a.name+' - '+fmt(q*a.price));
+      });
+    } else {
+      lines.push('   Sem adicionais');
+    }
+    let sub=order.dogPrice;
+    ADICIONAIS.forEach(a=>{sub+=(order.adicionais[a.id]||0)*a.price;});
+    lines.push('   Subtotal: '+fmt(sub));
+    lines.push('');
+  });
+
+  // Demais itens
+  [...YAKISOBA,...BURGUER,...MASSAS,...LANCHES,...BEBIDAS].forEach(item=>{
+    const q=quantities[item.id]||0;
+    if(q>0) lines.push('- '+q+'x *'+item.name+'* - '+fmt(q*item.price));
+  });
+
+  if(lines.length===0){alert('Selecione pelo menos um item antes de fazer o pedido!');return;}
+
+  const total=totalGeral();
+  const msg=[
+    '*DOG SHOW - NOVO PEDIDO*',
+    '----------------',
+    '*Nome:* '+nome,
+    '*Endereco:* '+endereco,
+    '*Pagamento:* '+pagamento,
+    '----------------',
+    '*ITENS DO PEDIDO:*',
+    '',
+    ...lines,
+    '----------------',
+    '*TOTAL: '+fmt(total)+'*',
+    '',
+    '_Pedido via Cardapio Online_'
+  ].join('\n');
+
+  const url='https://wa.me/5546999199519?text='+encodeURIComponent(msg);
+  window.open(url,'_blank');
+}
+</script>
+</body>
+</html>
